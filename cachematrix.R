@@ -1,15 +1,34 @@
-## Put comments here that give an overall description of what your
-## functions do
+## Prueba de cache de matriz inversa
+## y uso de la misma
 
-## Write a short comment describing this function
+## Crea el vector especial, listado de funciones
 
 makeCacheMatrix <- function(x = matrix()) {
-
+  i <- NULL
+  set <- function(y) {
+    x <<- y
+    i <<- NULL
+  }
+  get <- function() x
+  setinv <- function(inv) i <<- inv
+  getinv <- function() i
+  list(set = set, get = get,
+       setinv = setinv,
+       getinv = getinv)
 }
 
 
 ## Write a short comment describing this function
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+  ## Return a matrix that is the inverse of 'x'
+  i <- x$getinv()
+  if(!is.null(i)) {
+    message("getting cached inverted matrix")
+    return(i)
+  }
+  data <- x$get()
+  i <- solve(data, ...)
+  x$setinv(i)
+  i
 }
